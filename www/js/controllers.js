@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ["chart.js"])
     .controller('AppCtrl', function() {})
     .controller('DeviceCtrl', function($ionicPlatform, $scope, $cordovaDevice) {
         $ionicPlatform.ready(function() {
@@ -231,37 +231,21 @@ angular.module('starter.controllers', [])
         }
     });
 })
-.controller('ChartsCtrl', function($cordovaChartslocation, $scope) {
 
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaChartslocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      $scope.lat  = position.coords.latitude;
-      $scope.long = position.coords.longitude;
-    }, function(err) {
-      // error
-    });
-  var watchOptions = {
-    frequency : 1000,
-    timeout : 3000,
-    enableHighAccuracy: false // may cause errors if true
-  };
-  var watch = $cordovaChartslocation.watchPosition(watchOptions);
-  watch.then(
-    null,
-    function(err) {
-      // error
-    },
-    function(position) {
-      var lat  = position.coords.latitude;
-      var long = position.coords.longitude;
-  });
+.controller('ChartsCtrl', ['$scope', function ($scope) {
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.series = ['Series A', 'Series B'];
+  $scope.data = [
+    [65, 59, 80, 81, 56, 55, 40],
+    [28, 48, 40, 19, 86, 27, 90]
+  ];
 
+  $scope.donut={};
 
-})
+  $scope.donut.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  $scope.donut.data = [300, 500, 100];
 
-
+}])
 
 .controller('PrintCtrl', ['$scope', '$cordovaPrinter', function ($scope, $cordovaPrinter) {
    
@@ -275,9 +259,38 @@ angular.module('starter.controllers', [])
   $cordovaPrinter.print(doc);
       
   };
-
-
-
 }]);
+
+
+// .controller('GeoCtrl', function($cordovaGeolocation, $scope) {
+
+//   var posOptions = {timeout: 10000, enableHighAccuracy: false};
+//   $cordovaGeolocation
+//     .getCurrentPosition(posOptions)
+//     .then(function (position) {
+//       $scope.lat  = position.coords.latitude;
+//       $scope.long = position.coords.longitude;
+//     }, function(err) {
+//       // error
+//     });
+//   var watchOptions = {
+//     frequency : 1000,
+//     timeout : 3000,
+//     enableHighAccuracy: false // may cause errors if true
+//   };
+//   var watch = $cordovaGeolocation.watchPosition(watchOptions);
+//   watch.then(
+//     null,
+//     function(err) {
+//       // error
+//     },
+//     function(position) {
+//       var lat  = position.coords.latitude;
+//       var long = position.coords.longitude;
+//   });
+
+
+// })
+
 
 
